@@ -1,20 +1,24 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
-type UserDetail = {
-  name: string;
-  description: string;
-  rating: string;
+export type Repository = {
+  repository_name: string;
+  description: string | null;
+  rating?: number;
 };
 
-type User = {
-  [name: string]: UserDetail[];
+export type User = {
+  [name: string]: Repository[];
 };
 
 interface UserState {
+  isLoading: boolean;
+  error?: string | null;
   users: User;
 }
 
 const initialState: UserState = {
+  isLoading: false,
+  error: null,
   users: {}
 };
 
@@ -23,11 +27,17 @@ export const userSlicer = createSlice({
   initialState,
   reducers: {
     setUsers: (state, action: PayloadAction<User>) => {
-      state.users = { ...state.users, ...action.payload };
+      state.users = action.payload;
+    },
+    setError: (state, action: PayloadAction<string>) => {
+      state.error = action.payload;
+    },
+    setIsLoading: (state) => {
+      state.isLoading = !state.isLoading;
     }
   }
 });
 
-export const { setUsers } = userSlicer.actions;
+export const { setUsers, setError, setIsLoading } = userSlicer.actions;
 
 export default userSlicer.reducer;
