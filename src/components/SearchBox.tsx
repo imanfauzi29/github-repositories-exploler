@@ -1,12 +1,4 @@
-import {
-  Box,
-  Button,
-  FormControl,
-  FormErrorMessage,
-  Input,
-  Stack,
-  Text
-} from "@chakra-ui/react";
+import { Box, Button, FormControl, Input, Stack, Text } from "@chakra-ui/react";
 import { useAppDispatch } from "../hooks/reduxHooks";
 import { Octokit } from "octokit";
 import { useState } from "react";
@@ -17,6 +9,7 @@ import {
   setIsLoading,
   setUsers
 } from "../store/reducers/userSlicer";
+import { removeSpace } from "../utils/utils";
 
 const SearchBox = (): JSX.Element => {
   const [q, setQ] = useState<string>();
@@ -66,8 +59,15 @@ const SearchBox = (): JSX.Element => {
         <form onSubmit={handleSearch}>
           <Stack spacing={4} direction={["column", "row"]}>
             <FormControl>
-              <Input type={"text"} name={"q"} placeholder={"Enter username"} />
-              <FormErrorMessage>error message</FormErrorMessage>
+              <Input
+                type={"text"}
+                name={"q"}
+                required
+                onChange={(e) => {
+                  e.target.value = removeSpace(e.target.value);
+                }}
+                placeholder={"Enter username"}
+              />
             </FormControl>
 
             <Button type={"submit"} mt={4} colorScheme={"blue"}>
