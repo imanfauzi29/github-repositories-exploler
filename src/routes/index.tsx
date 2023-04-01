@@ -5,7 +5,8 @@ const Router = () => {
   const routerPath = [
     {
       path: "/",
-      element: <Home />
+      element: <Home />,
+      exact: true
     }
   ];
 
