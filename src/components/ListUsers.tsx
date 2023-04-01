@@ -9,6 +9,7 @@ import {
   Container,
   Flex,
   HStack,
+  SimpleGrid,
   Spinner,
   Text,
   VStack,
@@ -92,34 +93,36 @@ const ListUsers = (): JSX.Element => {
                 </Flex>
               )}
 
-              {!errorRepo && !loading
-                ? users[user].map((repo, j) => (
-                    <Box p={5} mb={10} minHeight={150} shadow="md" key={j}>
-                      <Container maxW={"container.xl"}>
-                        <HStack
-                          align={"stretch"}
-                          justifyContent={"space-between"}>
-                          <Box>
-                            <VStack spacing={4} align={"stretch"}>
-                              <Text fontWeight={"bold"}>
-                                {repo.repository_name}
-                              </Text>
-                              <Text>
-                                {repo.description ?? "(No Description)"}
-                              </Text>
-                            </VStack>
-                          </Box>
-                          <Box>
-                            <Flex alignItems={"center"}>
-                              <Text>{repo.rating}</Text>
-                              <StarIcon />
-                            </Flex>
-                          </Box>
-                        </HStack>
-                      </Container>
-                    </Box>
-                  ))
-                : null}
+              <SimpleGrid columns={[1, 2, 3]} spacing={10}>
+                {!errorRepo && !loading
+                  ? users[user].map((repo, j) => (
+                      <Box p={5} mb={10} minHeight={150} shadow="md" key={j}>
+                        <Container maxW={"container.xl"}>
+                          <HStack
+                            align={"stretch"}
+                            justifyContent={"space-between"}>
+                            <Box>
+                              <VStack spacing={4} align={"stretch"}>
+                                <Text fontWeight={"bold"}>
+                                  {repo.repository_name}
+                                </Text>
+                                <Text>
+                                  {repo.description ?? "(No Description)"}
+                                </Text>
+                              </VStack>
+                            </Box>
+                            <Box>
+                              <Flex alignItems={"center"}>
+                                <Text>{repo.rating}</Text>
+                                <StarIcon />
+                              </Flex>
+                            </Box>
+                          </HStack>
+                        </Container>
+                      </Box>
+                    ))
+                  : null}
+              </SimpleGrid>
             </AccordionPanel>
           </AccordionItem>
         ))}
